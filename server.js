@@ -1,4 +1,5 @@
 const express = require('express');
+const PORT = process.env.PORT || 3001;
 const app = express(); //We assign express() to the app variable so that we can later chain on methods to the Express.js server.
 
 function filterByQuery(query, animalsArray) {
@@ -56,8 +57,8 @@ app.get('/api/animals' ,(req, res) => {
     //res.json(animals); sends entire json file to the client-not waht we need
 //we are using the send() method from the res parameter (short for response) to send the string Hello! to our client
 })
-app.listen(3001, () => { //method to make our server listen
-    console.log('API server now on port 3001');
+app.listen(PORT, () => { //method to make our server listen
+    console.log(`API server now on port ${PORT}`);
 });
 //start by creating a route that the front-end can request data from
 const {animals} = require('./data/animals.json');
