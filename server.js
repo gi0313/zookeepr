@@ -38,6 +38,11 @@ function filterByQuery(query, animalsArray) {
     return filteredResults;
 //This function will take in req.query as an argument and filter through the animals accordingly, returning the new filtered array
 }
+//takes in the id and array of animals and returns a single animal object
+function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id)[0];
+    return result;
+}
 
 app.get('/api/animals', (req, res) => {
     let results = animals;
@@ -47,6 +52,21 @@ app.get('/api/animals', (req, res) => {
     res.json(results);
 //Our code works well querying properties that are strings, but what if we wanted to filter out animals based on their personality traits
 })
+
+app.get('/api/animals/:id', (req, res) => {
+    const result = findById(req.params.id, animals);
+      if (result) {
+        res.json(result);
+      } else {
+        res.send(404);
+      }
+  });
+
+app.get('/api/animals', (req, res) => {
+    const result = findById(req.params.id, animals);
+    res.json(result);
+//Now that we have multiple routes, we have to pay extra attention to the order of the routes. A param route must come after the other GET route
+});
 
 //the get() method requires two arguments. The first is a string that describes the route the client will have to fetch from. 
 //The second is a callback function that will execute every time that route is accessed with a GET request.
