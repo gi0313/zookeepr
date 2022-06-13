@@ -1,7 +1,9 @@
+const {animals} = require('./data/animals.json');
 const express = require('express');
 const PORT = process.env.PORT || 3001;
 const app = express(); //We assign express() to the app variable so that we can later chain on methods to the Express.js server.
 
+//This function will take in req.query as an argument and filter through the animals accordingly, returning the new filtered array
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray =[];
     //We save the animalsArray as filteredResults here:
@@ -57,7 +59,7 @@ app.get('/api/animals/:id', (req, res) => {
     const result = findById(req.params.id, animals);
       if (result) {
         res.json(result);
-      } else {
+      } else { //To send JSON, just change send to json
         res.send(404);
       }
   });
@@ -81,4 +83,3 @@ app.listen(PORT, () => { //method to make our server listen
     console.log(`API server now on port ${PORT}`);
 });
 //start by creating a route that the front-end can request data from
-const {animals} = require('./data/animals.json');
