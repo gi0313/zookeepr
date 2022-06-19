@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 //The functions we can mount to our server are referred to as middleware.
 app.use(express.json());
 //^^used takes incoming POST data in the form of JSON and parses it into the req.body JavaScript object.
-
+app.use(express.static('public'));
 //This function will take in req.query as an argument and filter through the animals accordingly, returning the new filtered array
 function filterByQuery(query, animalsArray) {
     let personalityTraitsArray =[];
@@ -127,6 +127,22 @@ app.post('/api/animals', (req, res) => {
   }
 });
 //we defined a route that listens for POST requests, not GET requests.
+app.get('/', (req,res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+})
+
+app.get('/animals', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+app.get('/zookepers', (req,res) => {
+  res.sendFile(path.join(_dirname, './public/zookepers.html'));
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
 app.listen(PORT, () => { //method to make our server listen
     console.log(`API server now on port ${PORT}`);
 });
